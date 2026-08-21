@@ -1,0 +1,109 @@
+name: Update view counts
+
+# Runs daily and can be triggered by hand from the Actions tab.
+# Works with NO setup at all. If you later add a YouTube API key as a repo
+# secret named YT_API_KEY, it uses that instead — sturdier and officially
+# supported. Either way, nothing else changes.
+
+on:
+  schedule:
+    - cron: '0 11 * * *'      # ~4am Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  views:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count views
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, datetime, urllib.request, urllib.error, time
+
+          html = open('index.html', encoding='utf-8').read()
+          ids = set(re.findall(r'(?:i\.ytimg\.com|img\.youtube\.com)/vi/([A-Za-z0-9_-]{11})/', html))
+          ids |= set(re.findall(r'youtube\.com/watch\?v=([A-Za-z0-9_-]{11})', html))
+          ids = sorted(ids)
+          print(f'{len(ids)} unique YouTube ids referenced by index.html')
+          if not ids:
+              raise SystemExit('no video ids found — leaving views.json untouched')
+
+          key = os.environ.get('YT_API_KEY', '').strip()
+          counts, failed = {}, []
+
+          def get(url, tries=3):
+              for n in range(tries):
+                  try:
+                      req = urllib.request.Request(url, headers={
+                          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
+                                        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122 Safari/537.36',
+                          'Accept-Language': 'en-US,en;q=0.9'})
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          return r.read().decode('utf-8', 'replace')
+                  except Exception as e:
+                      if n == tries - 1:
+                          print(f'  fetch failed: {e}')
+                          return None
+                      time.sleep(2 * (n + 1))
+
+          if key:
+              print('using YouTube Data API')
+              for i in range(0, len(ids), 50):
+                  batch = ids[i:i+50]
+                  body = get('https://www.googleapis.com/youtube/v3/videos'
+                             f'?part=statistics&id={",".join(batch)}&key={key}')
+                  if not body:
+                      failed += batch; continue
+                  for item in json.loads(body).get('items', []):
+                      v = item.get('statistics', {}).get('viewCount')
+                      if v is not None:
+                          counts[item['id']] = int(v)
+                  failed += [b for b in batch if b not in counts]
+          else:
+              print('no YT_API_KEY secret set — reading public watch pages instead')
+              for vid in ids:
+                  body = get(f'https://www.youtube.com/watch?v={vid}')
+                  if not body:
+                      failed.append(vid); continue
+                  m = (re.search(r'"viewCount"\s*:\s*"(\d+)"', body)
+                       or re.search(r'"viewCount"\s*:\s*\{\s*"simpleText"\s*:\s*"([\d,]+)', body))
+                  if m:
+                      counts[vid] = int(m.group(1).replace(',', ''))
+                  else:
+                      failed.append(vid)
+                  time.sleep(1)          # be polite
+
+          total = sum(counts.values())
+          print(f'counted {len(counts)} of {len(ids)} videos, total {total:,}')
+          if failed:
+              print('no count for:', failed)
+
+          # Never overwrite good data with a broken run.
+          if not counts:
+              raise SystemExit('nothing counted — leaving views.json untouched')
+          try:
+              prev = json.load(open('views.json'))
+              if prev.get('total', 0) > 0 and total < prev['total'] * 0.5:
+                  raise SystemExit(f'total dropped from {prev["total"]:,} to {total:,} '
+                                   '— looks wrong, leaving views.json untouched')
+          except FileNotFoundError:
+              pass
+
+          json.dump({'total': total, 'tracked': len(counts), 'ids_seen': len(ids),
+                     'updated': datetime.date.today().isoformat()},
+                    open('views.json', 'w'), indent=1)
+          PY
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "views-bot"
+          git config user.email "actions@github.com"
+          git add views.json
+          git diff --staged --quiet || git commit -m "Update view counts"
+          git push
