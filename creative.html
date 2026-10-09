@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rease Warford — Photography</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%235aa9e6'/%3E%3Ctext x='32' y='42' font-family='Helvetica,Arial,sans-serif' font-size='23' font-weight='bold' fill='%230a0d11' text-anchor='middle'%3ERWdb%3C/text%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0e0f12;--pan:#16181d;--pan2:#1d2027;--tx:#f2f3f5;--mu:#8b8f99;
+--ln:#272b33;--ac:#5aa9e6;--f:-apple-system,BlinkMacSystemFont,'Inter','Helvetica Neue',sans-serif}
+body{background:var(--bg);color:var(--tx);font-family:var(--f);-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:auto;background:#23262d}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* ── top bar (identical to the credits page) ── */
+.top{position:sticky;top:0;z-index:60;background:rgba(14,15,18,.82);
+backdrop-filter:saturate(180%) blur(18px);border-bottom:1px solid var(--ln)}
+.top .wrap{display:flex;align-items:center;gap:22px;height:56px}
+.mark{display:inline-flex;align-items:center;justify-content:center;
+background:var(--ac);color:#0a0d11;border-radius:7px;padding:0 9px;height:27px;
+font-weight:800;font-size:15px;letter-spacing:-.03em;line-height:1;
+box-shadow:0 1px 0 rgba(255,255,255,.16) inset;transition:.15s}
+.mark span{transform:translateY(.5px)}
+.mark:hover{background:#7cbcf0}
+.top nav{display:flex;gap:18px;margin-left:auto;font-size:13px;color:var(--mu);flex-wrap:wrap}
+.top nav a:hover{color:var(--tx)}
+.top nav a.on{color:var(--tx)}
+
+/* ── header ── */
+.head{padding:46px 0 34px;border-bottom:1px solid var(--ln)}
+.head h1{font-size:clamp(30px,4.6vw,46px);letter-spacing:-.035em;font-weight:700;line-height:1.05}
+.head .kick{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ac);
+font-weight:600;margin-bottom:11px}
+.head p{color:#c3c7ce;font-size:14.5px;max-width:72ch;margin-top:12px;line-height:1.65}
+.jump{display:flex;gap:9px;margin-top:22px;flex-wrap:wrap}
+.jump a{border:1px solid var(--ln);background:var(--pan);padding:8px 15px;border-radius:100px;
+font-size:12.5px;transition:.15s;color:var(--mu)}
+.jump a:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ── sections ── */
+.blk{padding:38px 0 0}
+.sec{margin-bottom:26px;border:1px solid var(--ln);border-radius:8px;overflow:hidden;background:var(--pan)}
+.sh{display:flex;align-items:baseline;gap:14px;padding:13px 16px;background:var(--pan2);
+border-bottom:1px solid var(--ln);flex-wrap:wrap;scroll-margin-top:72px}
+.sh h2{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.sh .at{font-weight:400;color:var(--mu);margin-left:7px}
+.sh .ct{font-size:11px;color:var(--mu);letter-spacing:.06em;margin-left:auto;white-space:nowrap}
+
+/* masonry grid — CSS columns handle mixed aspect ratios with no JS */
+.grid{padding:14px;column-count:3;column-gap:14px}
+@media(max-width:900px){.grid{column-count:2}}
+@media(max-width:560px){.grid{column-count:1}}
+.ph{position:relative;display:block;margin:0 0 14px;border-radius:5px;overflow:hidden;
+border:1px solid #2c313a;background:#23262d;cursor:zoom-in;break-inside:avoid}
+.ph img{transition:transform .5s cubic-bezier(.2,.7,.3,1),opacity .4s}
+.ph:hover img{transform:scale(1.045)}
+.ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;
+font-size:12px;color:#e8eaee;line-height:1.35;
+background:linear-gradient(0deg,rgba(8,9,11,.88),rgba(8,9,11,0));
+opacity:0;transition:opacity .22s;pointer-events:none}
+.ph:hover figcaption,.ph:focus-visible figcaption{opacity:1}
+.ph:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.ph.hid{display:none}
+.sec.open .ph.hid{display:block}
+.more{display:block;width:100%;font:inherit;font-size:12.5px;color:var(--ac);
+background:var(--pan2);border:0;border-top:1px solid var(--ln);padding:12px;
+cursor:pointer;letter-spacing:.02em;transition:.14s}
+.more:hover{background:#232833;color:#8ec5f5}
+
+/* empty state */
+.empty{padding:16px 16px 20px}
+.empty p{font-size:13px;color:#6d727c;font-style:italic;margin-bottom:14px;max-width:70ch}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media(max-width:560px){.slots{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.slot{height:132px;border-radius:5px;border:1px dashed #343945;display:flex;
+align-items:center;justify-content:center;font-size:9.5px;letter-spacing:.11em;
+text-transform:uppercase;color:#454b56;
+background:linear-gradient(135deg,#171a20,#1c2027 60%,#171a20)}
+
+/* ── lightbox ── */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(8,9,11,.96);
+display:none;align-items:center;justify-content:center;padding:36px 56px}
+.lb[data-on="1"]{display:flex}
+.lb img{max-width:100%;max-height:calc(100vh - 120px);width:auto;height:auto;
+border-radius:4px;background:transparent}
+.lb figcaption{position:absolute;left:0;right:0;bottom:18px;text-align:center;
+font-size:12.5px;color:var(--mu);padding:0 56px}
+.lb button{position:absolute;background:transparent;border:0;color:#9aa0ab;
+font:inherit;cursor:pointer;line-height:1;transition:.15s;padding:10px}
+.lb button:hover{color:#fff}
+.lb .x{top:12px;right:14px;font-size:26px}
+.lb .pv{left:8px;top:50%;transform:translateY(-50%);font-size:34px}
+.lb .nx{right:8px;top:50%;transform:translateY(-50%);font-size:34px}
+@media(max-width:620px){.lb{padding:52px 10px}.lb .pv,.lb .nx{font-size:26px}
+.lb figcaption{padding:0 16px;font-size:11.5px}}
+
+footer{padding:34px 0 60px;color:var(--mu);font-size:12.5px;display:flex;gap:16px;flex-wrap:wrap;
+border-top:1px solid var(--ln);margin-top:30px}
+@media(max-width:760px){.wrap{padding:0 16px}.head{padding:34px 0 26px}
+.top nav{gap:6px}.top nav a{padding:10px 6px}.jump a{padding:11px 17px}
+.grid{padding:10px;column-gap:10px}.ph{margin-bottom:10px}}
+
+/* top bar: four nav links no longer fit one line on phones — let the bar grow
+   instead of letting the nav spill past its bottom edge */
+@media(max-width:760px){
+.top .wrap{height:auto;min-height:56px;padding-top:7px;padding-bottom:7px;gap:14px}
+.top nav{gap:4px 14px;font-size:12px;justify-content:flex-end}
+.top nav a{padding:8px 0}
+}
+</style></head><body>
+
+<div class="top"><div class="wrap"><a class="mark" href="index.html" aria-label="Rease Warford — credits"><span>RWdb</span></a>
+<nav><a href="index.html">Home</a><a href="index.html#film">Filmography</a><a class="on" href="creative.html" aria-current="page">Photography</a><a href="mailto:reasemwarford@gmail.com">Contact</a></nav></div></div>
+
+<div class="head"><div class="wrap">
+<div class="kick">Selected stills</div>
+<h1>Photography</h1>
+<p>Automotive, travel, and lifestyle stills shot mostly with Fujifilm and disposable cameras.</p>
+<div class="jump" id="jump"></div>
+</div></div>
+
+<div class="blk"><div class="wrap" id="sections"></div>
+<div class="wrap"><footer><span>© 2026 Rease Warford</span><span>reasemwarford@gmail.com</span></footer></div></div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="x" type="button" aria-label="Close">×</button>
+  <button class="pv" type="button" aria-label="Previous">‹</button>
+  <button class="nx" type="button" aria-label="Next">›</button>
+  <figure style="margin:0"><img id="lbimg" alt=""><figcaption id="lbcap"></figcaption></figure>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════════
+   PHOTO MANIFEST — this is the only block you edit to add photos.
+
+   1. Drop the image files into a folder next to this page, e.g.
+        photos/automotive/porsche-993-dusk.jpg
+   2. Add a line to the matching array below.
+
+        { src: 'photos/automotive/porsche-993-dusk.jpg',
+          w: 2000, h: 1333,                 // pixel dimensions (see note)
+          cap: '993 Carrera — Marin Headlands' }   // optional caption
+
+   w/h are optional but worth filling in: they let the browser reserve the
+   right space before the image loads, so the page doesn't jump while
+   scrolling. Any photo without them still works.
+
+   Order within each array is the order shown. The first LIMIT photos show
+   by default; the rest sit behind the "Show N more" button.
+   ════════════════════════════════════════════════════════════════════════ */
+
+var LIMIT = 9;          /* photos visible per section before "show more" */
+
+var SECTIONS = [
+  { key: 'automotive',
+    title: 'Automotive',
+    note: 'Cars, bikes, and the roads that justify them',
+    photos: [
+      { src:'photos/automotive/ferrari-296-osaka.jpg', w:1333, h:2000, cap:'Ferrari 296 GTB — Osaka' },
+      { src:'photos/automotive/ferrari-360-jingumae.jpg', w:1333, h:2000, cap:'Widebody Ferrari 360 — Jingūmae, Tokyo' },
+      { src:'photos/automotive/mazda-rx7-fd.jpg', w:1333, h:2000, cap:'Mazda RX-7 FD — morning meet' },
+      { src:'photos/automotive/lotus-esprit-harajuku.jpg', w:1333, h:2000, cap:'Lotus Esprit — Harajuku, Tokyo' },
+      { src:'photos/automotive/lancer-evo-vii-shimokitazawa.jpg', w:1333, h:2000, cap:'Lancer Evolution VII — Shimokitazawa, Tokyo' },
+      { src:'photos/automotive/loading-dock-japan.jpg', w:1333, h:2000, cap:'Loading dock — Japan' },
+      { src:'photos/automotive/honda-acty-shiga.jpg', w:1333, h:2000, cap:'Honda Acty — Shiga' },
+      { src:'photos/automotive/ferrari-harajuku.jpg', w:1333, h:2000, cap:'Ferrari — Harajuku, Tokyo' },
+      { src:'photos/automotive/skyline-er34-tokyo.jpg', w:1333, h:2000, cap:'Nissan Skyline ER34 — Tokyo' },
+    ]
+  },
+  { key: 'travel',
+    title: 'Travel',
+    note: 'Landscape and street, shot on location',
+    photos: [
+    ]
+  },
+  { key: 'life',
+    title: 'Lifestyle',
+    note: 'Portraits, friends, and the in-between',
+    photos: [
+    ]
+  }
+];
+
+/* ──────────────────────── nothing below needs editing ──────────────────── */
+
+function esc(s){ return String(s == null ? '' : s)
+  .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+var flat = [];   /* every visible photo, in page order — drives the lightbox */
+
+function build(){
+  var jump = document.getElementById('jump');
+  var host = document.getElementById('sections');
+  var jHtml = '', sHtml = '';
+
+  SECTIONS.forEach(function(sec){
+    var n = sec.photos.length;
+    jHtml += '<a href="#' + sec.key + '">' + esc(sec.title) + '</a>';
+
+    var body;
+    if (!n) {
+      body = '<div class="empty"><p>Photos for this section are on the way — ' +
+             'they will drop straight into this grid.</p><div class="slots">' +
+             '<div class="slot">frame</div><div class="slot">frame</div>' +
+             '<div class="slot">frame</div></div></div>';
+    } else {
+      var cells = '';
+      sec.photos.forEach(function(p, idx){
+        var i = flat.length;
+        flat.push(p);
+        var dims = (p.w && p.h) ? ' width="' + p.w + '" height="' + p.h + '"' : '';
+        cells += '<figure class="ph' + (idx >= LIMIT ? ' hid' : '') + '" tabindex="0" role="button"' +
+                 ' data-i="' + i + '" aria-label="' + esc(p.cap || 'Open photo') + '">' +
+                 '<img loading="lazy" decoding="async" src="' + esc(p.src) + '"' + dims +
+                 ' alt="' + esc(p.cap || '') + '">' +
+                 (p.cap ? '<figcaption>' + esc(p.cap) + '</figcaption>' : '') +
+                 '</figure>';
+      });
+      body = '<div class="grid">' + cells + '</div>';
+      if (n > LIMIT) {
+        body += '<button class="more" type="button" data-n="' + (n - LIMIT) +
+                '" aria-expanded="false">Show ' + (n - LIMIT) + ' more</button>';
+      }
+    }
+
+    var ct = n ? (n + ' photo' + (n === 1 ? '' : 's')) : 'coming soon';
+    sHtml += '<section class="sec"><header class="sh" id="' + sec.key + '">' +
+             '<h2>' + esc(sec.title) + '<span class="at">' + esc(sec.note) + '</span></h2>' +
+             '<span class="ct">' + ct + '</span></header>' + body + '</section>';
+  });
+
+  jump.innerHTML = jHtml;
+  host.innerHTML = sHtml;
+}
+
+build();
+
+/* show-more toggles */
+document.querySelectorAll('.more').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var s = btn.closest('.sec'), open = s.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.textContent = open ? 'Show less' : ('Show ' + btn.dataset.n + ' more');
+  });
+});
+
+/* lightbox */
+(function(){
+  var lb = document.getElementById('lb'),
+      im = document.getElementById('lbimg'),
+      cp = document.getElementById('lbcap'),
+      cur = -1;
+
+  function show(i){
+    if (!flat.length) return;
+    cur = (i + flat.length) % flat.length;
+    var p = flat[cur];
+    im.src = p.src;
+    im.alt = p.cap || '';
+    cp.textContent = p.cap || '';
+    lb.dataset.on = '1';
+    document.body.style.overflow = 'hidden';
+  }
+  function hide(){
+    lb.dataset.on = '0';
+    im.removeAttribute('src');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', function(e){
+    var fig = e.target.closest('.ph');
+    if (fig) { show(+fig.dataset.i); return; }
+    if (e.target === lb) hide();
+  });
+  document.addEventListener('keydown', function(e){
+    var fig = document.activeElement && document.activeElement.classList &&
+              document.activeElement.classList.contains('ph');
+    if (fig && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault(); show(+document.activeElement.dataset.i); return;
+    }
+    if (lb.dataset.on !== '1') return;
+    if (e.key === 'Escape') hide();
+    else if (e.key === 'ArrowRight') show(cur + 1);
+    else if (e.key === 'ArrowLeft') show(cur - 1);
+  });
+  lb.querySelector('.x').addEventListener('click', hide);
+  lb.querySelector('.nx').addEventListener('click', function(e){ e.stopPropagation(); show(cur + 1); });
+  lb.querySelector('.pv').addEventListener('click', function(e){ e.stopPropagation(); show(cur - 1); });
+
+  /* swipe on touch */
+  var x0 = null;
+  lb.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+})();
+</script>
+</body></html>
