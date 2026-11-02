@@ -4,6 +4,17 @@ name: Update view counts
 # Works with NO setup at all. If you later add a YouTube API key as a repo
 # secret named YT_API_KEY, it uses that instead — sturdier and officially
 # supported. Either way, nothing else changes.
+#
+# CARRY-FORWARD (added 2 Nov 2026)
+# --------------------------------
+# Apple makes finished campaign videos private. When that happens YouTube stops
+# returning a view count and the old version of this workflow silently dropped
+# that video from the total — the site lost 44.5 million views overnight on
+# 7 Oct 2026 when the iPhone 17 Pro introduction went private.
+#
+# This version remembers the last count it saw for every video in
+# views.json -> last_known. If a video stops reporting, its final figure is
+# carried forward instead of vanishing. Views that happened do not un-happen.
 
 on:
   schedule:
@@ -26,13 +37,46 @@ jobs:
           python3 - <<'PY'
           import os, re, json, datetime, urllib.request, urllib.error, time
 
+          # Videos whose last count was lost before carry-forward existed.
+          # Only ever needed for losses predating 2 Nov 2026 — from now on the
+          # last_known store fills itself in automatically.
+          SEED = {
+              # iPhone 17 Pro — Introduction. Went private 7 Oct 2026.
+              # Recovered from the step change in this file's own git history:
+              # 2026-10-06 total 229,637,466 (51 counted)
+              # 2026-10-07 total 185,100,925 (50 counted, ids_seen unchanged)
+              # drop 44,536,541, plus that day's growth for the other 50.
+              '_-AS5DtDeqs': {'views': 44572000, 'asof': '2026-10-06',
+                              'note': 'estimated from views.json history; +/- ~40k'},
+              # The Underdogs: BSOD (Blue Screen of Death). Went private 10 Sep 2026.
+              # Same method:
+              #   2026-09-09 total 254,538,076 (52 counted)
+              #   2026-09-10 total 228,427,868 (51 counted, ids_seen unchanged)
+              # drop 26,110,208, plus that day's growth for the other 51 (~85k).
+              '6K4eUO53-UE': {'views': 26195000, 'asof': '2026-09-09',
+                              'note': 'estimated from views.json history; +/- ~90k'},
+          }
+
           html = open('index.html', encoding='utf-8').read()
+          # Three ways a video id can appear on the page. The thumbnail pattern used
+          # to be the main one; since every thumbnail is now embedded base64, ids
+          # come from links. /shorts/ matters: "iPhone 16 - FindMy Airpods" is a
+          # Short, and was only ever found via its thumbnail url.
           ids = set(re.findall(r'(?:i\.ytimg\.com|img\.youtube\.com)/vi/([A-Za-z0-9_-]{11})/', html))
           ids |= set(re.findall(r'youtube\.com/watch\?v=([A-Za-z0-9_-]{11})', html))
+          ids |= set(re.findall(r'youtube\.com/shorts/([A-Za-z0-9_-]{11})', html))
           ids = sorted(ids)
           print(f'{len(ids)} unique YouTube ids referenced by index.html')
           if not ids:
               raise SystemExit('no video ids found — leaving views.json untouched')
+
+          try:
+              prev = json.load(open('views.json'))
+          except FileNotFoundError:
+              prev = {}
+          last_known = dict(prev.get('last_known') or {})
+          for vid, rec in SEED.items():
+              last_known.setdefault(vid, rec)
 
           key = os.environ.get('YT_API_KEY', '').strip()
           counts, failed = {}, []
@@ -79,24 +123,48 @@ jobs:
                       failed.append(vid)
                   time.sleep(1)          # be polite
 
-          total = sum(counts.values())
-          print(f'counted {len(counts)} of {len(ids)} videos, total {total:,}')
-          if failed:
-              print('no count for:', failed)
-
-          # Never overwrite good data with a broken run.
           if not counts:
               raise SystemExit('nothing counted — leaving views.json untouched')
-          try:
-              prev = json.load(open('views.json'))
-              if prev.get('total', 0) > 0 and total < prev['total'] * 0.5:
-                  raise SystemExit(f'total dropped from {prev["total"]:,} to {total:,} '
-                                   '— looks wrong, leaving views.json untouched')
-          except FileNotFoundError:
-              pass
 
-          json.dump({'total': total, 'tracked': len(counts), 'ids_seen': len(ids),
-                     'updated': datetime.date.today().isoformat()},
+          today = datetime.date.today().isoformat()
+
+          # A live count only ever replaces a stored one when it is not smaller.
+          # YouTube occasionally serves a stale or partial number; that should
+          # not ratchet the record down.
+          for vid, n in counts.items():
+              rec = last_known.get(vid)
+              if not rec or n >= rec.get('views', 0):
+                  last_known[vid] = {'views': n, 'asof': today}
+
+          live = sum(counts.values())
+          carried_ids = [v for v in ids if v not in counts and v in last_known]
+          carried = sum(last_known[v]['views'] for v in carried_ids)
+          lost = [v for v in ids if v not in counts and v not in last_known]
+          total = live + carried
+
+          print(f'counted {len(counts)} of {len(ids)} videos live, total {live:,}')
+          if carried_ids:
+              print(f'carried forward {len(carried_ids)} video(s) worth {carried:,}:')
+              for v in carried_ids:
+                  r = last_known[v]
+                  print(f'   {v}  {r["views"]:>12,}  last seen {r["asof"]}')
+          if lost:
+              print('NO COUNT AND NO HISTORY (contributing zero):', lost)
+          print(f'TOTAL {total:,}')
+
+          # Never overwrite good data with a broken run.
+          if prev.get('total', 0) > 0 and total < prev['total'] * 0.5:
+              raise SystemExit(f'total dropped from {prev["total"]:,} to {total:,} '
+                               '— looks wrong, leaving views.json untouched')
+
+          json.dump({'total': total,
+                     'live': live,
+                     'carried': carried,
+                     'tracked': len(counts),
+                     'carried_forward': len(carried_ids),
+                     'ids_seen': len(ids),
+                     'updated': today,
+                     'last_known': dict(sorted(last_known.items()))},
                     open('views.json', 'w'), indent=1)
           PY
 
