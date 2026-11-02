@@ -114,7 +114,6 @@ border-top:1px solid var(--ln);margin-top:30px}
 <div class="head"><div class="wrap">
 <div class="kick">Selected stills</div>
 <h1>Photography</h1>
-<p>Automotive, travel, and lifestyle stills shot mostly with Fujifilm and disposable cameras.</p>
 <div class="jump" id="jump"></div>
 </div></div>
 
@@ -153,7 +152,7 @@ var LIMIT = 9;          /* photos visible per section before "show more" */
 var SECTIONS = [
   { key: 'automotive',
     title: 'Automotive',
-    note: 'Cars, bikes, and the roads that justify them',
+    note: '',
     photos: [
       { src:'photos/automotive/ferrari-296-osaka.jpg', w:1333, h:2000, cap:'Ferrari 296 GTB — Osaka' },
       { src:'photos/automotive/ferrari-360-jingumae.jpg', w:1333, h:2000, cap:'Widebody Ferrari 360 — Jingūmae, Tokyo' },
@@ -167,12 +166,14 @@ var SECTIONS = [
     ]
   },
   { key: 'travel',
+    hidden: true,            /* flip to false when photos are ready */
     title: 'Travel',
     note: 'Landscape and street, shot on location',
     photos: [
     ]
   },
   { key: 'life',
+    hidden: true,            /* flip to false when photos are ready */
     title: 'Lifestyle',
     note: 'Portraits, friends, and the in-between',
     photos: [
@@ -193,6 +194,7 @@ function build(){
   var jHtml = '', sHtml = '';
 
   SECTIONS.forEach(function(sec){
+    if (sec.hidden) return;          /* section kept in the manifest, not drawn */
     var n = sec.photos.length;
     jHtml += '<a href="#' + sec.key + '">' + esc(sec.title) + '</a>';
 
@@ -224,11 +226,14 @@ function build(){
 
     var ct = n ? (n + ' photo' + (n === 1 ? '' : 's')) : 'coming soon';
     sHtml += '<section class="sec"><header class="sh" id="' + sec.key + '">' +
-             '<h2>' + esc(sec.title) + '<span class="at">' + esc(sec.note) + '</span></h2>' +
+             '<h2>' + esc(sec.title) +
+               (sec.note ? '<span class="at">' + esc(sec.note) + '</span>' : '') + '</h2>' +
              '<span class="ct">' + ct + '</span></header>' + body + '</section>';
   });
 
-  jump.innerHTML = jHtml;
+  var shown = SECTIONS.filter(function(x){ return !x.hidden; }).length;
+  jump.innerHTML = shown > 1 ? jHtml : '';
+  jump.style.display = shown > 1 ? '' : 'none';
   host.innerHTML = sHtml;
 }
 
