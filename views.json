@@ -1,35 +1,35 @@
 {
- "total": 266150156,
- "live": 195383156,
+ "total": 266196012,
+ "live": 195429012,
  "carried": 70767000,
  "tracked": 78,
  "carried_forward": 2,
  "ids_seen": 80,
- "updated": "2026-11-08",
+ "updated": "2026-11-09",
  "last_known": {
   "-TTyyY3VWh8": {
-   "views": 585484,
-   "asof": "2026-11-08"
+   "views": 585520,
+   "asof": "2026-11-09"
   },
   "0yz5F9WtmsI": {
-   "views": 535708,
-   "asof": "2026-11-08"
+   "views": 535913,
+   "asof": "2026-11-09"
   },
   "1QNsdr-Qx_I": {
-   "views": 3769950,
-   "asof": "2026-11-08"
+   "views": 3775047,
+   "asof": "2026-11-09"
   },
   "29SyCndnMZs": {
-   "views": 37703,
-   "asof": "2026-11-08"
+   "views": 37766,
+   "asof": "2026-11-09"
   },
   "2YHa1vhnmK0": {
-   "views": 295998,
-   "asof": "2026-11-08"
+   "views": 296156,
+   "asof": "2026-11-09"
   },
   "4sexN3yE8xg": {
-   "views": 8742,
-   "asof": "2026-11-08"
+   "views": 8744,
+   "asof": "2026-11-09"
   },
   "6K4eUO53-UE": {
    "views": 26195000,
@@ -37,184 +37,184 @@
    "note": "estimated from views.json history; +/- ~90k"
   },
   "6wNqpZdHE_s": {
-   "views": 66342,
-   "asof": "2026-11-08"
+   "views": 66391,
+   "asof": "2026-11-09"
   },
   "86OEy67x70w": {
    "views": 914,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "96ogPwN9ykM": {
-   "views": 148426,
-   "asof": "2026-11-08"
+   "views": 148780,
+   "asof": "2026-11-09"
   },
   "981SivztzOc": {
-   "views": 98471,
-   "asof": "2026-11-08"
+   "views": 98588,
+   "asof": "2026-11-09"
   },
   "9Ep-_CjSsIM": {
-   "views": 16027,
-   "asof": "2026-11-08"
+   "views": 16029,
+   "asof": "2026-11-09"
   },
   "A4BUbpKdenc": {
-   "views": 156355,
-   "asof": "2026-11-08"
+   "views": 156406,
+   "asof": "2026-11-09"
   },
   "A7MSwdXj86k": {
-   "views": 351583,
-   "asof": "2026-11-08"
+   "views": 351691,
+   "asof": "2026-11-09"
   },
   "B-jjnydci50": {
-   "views": 124570,
-   "asof": "2026-11-08"
+   "views": 124576,
+   "asof": "2026-11-09"
   },
   "BE-HvM6hM_w": {
-   "views": 66966,
-   "asof": "2026-11-08"
+   "views": 66986,
+   "asof": "2026-11-09"
   },
   "C0FnJDhY9-0": {
-   "views": 2968411,
-   "asof": "2026-11-08"
+   "views": 2968667,
+   "asof": "2026-11-09"
   },
   "CToxp125mhc": {
-   "views": 36230,
-   "asof": "2026-11-08"
+   "views": 36421,
+   "asof": "2026-11-09"
   },
   "D21tSBFuniA": {
    "views": 2433,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "DLcQSp_CIIc": {
-   "views": 12508,
-   "asof": "2026-11-08"
+   "views": 12513,
+   "asof": "2026-11-09"
   },
   "Dsv9EAuW5H8": {
-   "views": 17537381,
-   "asof": "2026-11-08"
+   "views": 17544595,
+   "asof": "2026-11-09"
   },
   "E3dDr_QtBuo": {
-   "views": 44405,
-   "asof": "2026-11-08"
+   "views": 44516,
+   "asof": "2026-11-09"
   },
   "E7qZOIYGIKM": {
-   "views": 9553,
-   "asof": "2026-11-08"
+   "views": 9554,
+   "asof": "2026-11-09"
   },
   "EWBzIV-DzYg": {
-   "views": 1485820,
-   "asof": "2026-11-08"
+   "views": 1485822,
+   "asof": "2026-11-09"
   },
   "FB6oCmrIj-Y": {
-   "views": 393971,
-   "asof": "2026-11-08"
+   "views": 394234,
+   "asof": "2026-11-09"
   },
   "GBOZIRK1ujw": {
-   "views": 158243,
-   "asof": "2026-11-08"
+   "views": 158414,
+   "asof": "2026-11-09"
   },
   "GphgJjaKKhw": {
-   "views": 296402,
-   "asof": "2026-11-08"
+   "views": 296868,
+   "asof": "2026-11-09"
   },
   "H3KnMyojEQU": {
-   "views": 32116052,
-   "asof": "2026-11-08"
+   "views": 32118543,
+   "asof": "2026-11-09"
   },
   "IWWkbfUDa24": {
    "views": 620,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "IpxN0rur-qQ": {
    "views": 73539,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "Is2NHa7awWY": {
-   "views": 71507,
-   "asof": "2026-11-08"
+   "views": 71594,
+   "asof": "2026-11-09"
   },
   "Izz0Dh12070": {
    "views": 7604,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "JGnHMPvdK7c": {
-   "views": 3439485,
-   "asof": "2026-11-08"
+   "views": 3449055,
+   "asof": "2026-11-09"
   },
   "L2O33z_5LfY": {
-   "views": 14359,
-   "asof": "2026-11-08"
+   "views": 14370,
+   "asof": "2026-11-09"
   },
   "MLehRytu9Zo": {
-   "views": 35425,
-   "asof": "2026-11-08"
+   "views": 35429,
+   "asof": "2026-11-09"
   },
   "MLlSSJ0z7xM": {
-   "views": 76423870,
-   "asof": "2026-11-08"
+   "views": 76438057,
+   "asof": "2026-11-09"
   },
   "OSaP6bJoU44": {
-   "views": 928833,
-   "asof": "2026-11-08"
+   "views": 929049,
+   "asof": "2026-11-09"
   },
   "QDLlQ5IL2Bk": {
-   "views": 172746,
-   "asof": "2026-11-08"
+   "views": 172753,
+   "asof": "2026-11-09"
   },
   "QFxDF30qf_4": {
-   "views": 32260,
-   "asof": "2026-11-08"
+   "views": 32262,
+   "asof": "2026-11-09"
   },
   "RReaifSwpHQ": {
    "views": 642,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "RXeOiIDNNek": {
-   "views": 12641477,
-   "asof": "2026-11-08"
+   "views": 12641861,
+   "asof": "2026-11-09"
   },
   "Rk4VyQxDq5s": {
-   "views": 68804,
-   "asof": "2026-11-08"
+   "views": 68972,
+   "asof": "2026-11-09"
   },
   "SPC_yCe1cUw": {
-   "views": 7115,
-   "asof": "2026-11-08"
+   "views": 7117,
+   "asof": "2026-11-09"
   },
   "TQQmSPSZKvY": {
-   "views": 1637,
-   "asof": "2026-11-08"
+   "views": 1640,
+   "asof": "2026-11-09"
   },
   "TmKicEhzxm4": {
    "views": 6218,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "UaeWJK_vv-Y": {
-   "views": 123365,
-   "asof": "2026-11-08"
+   "views": 123442,
+   "asof": "2026-11-09"
   },
   "Um-Y8jOM_dI": {
    "views": 3690,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "W-HhMUe9hOg": {
-   "views": 52049,
-   "asof": "2026-11-08"
+   "views": 52072,
+   "asof": "2026-11-09"
   },
   "WeP9VUf1OoE": {
-   "views": 172872,
-   "asof": "2026-11-08"
+   "views": 172919,
+   "asof": "2026-11-09"
   },
   "XM3I8T0p0d4": {
-   "views": 83856,
-   "asof": "2026-11-08"
+   "views": 83862,
+   "asof": "2026-11-09"
   },
   "ZK3JhU73W18": {
-   "views": 132425,
-   "asof": "2026-11-08"
+   "views": 132558,
+   "asof": "2026-11-09"
   },
   "ZTPw6Cz7gXY": {
    "views": 1071,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "_-AS5DtDeqs": {
    "views": 44572000,
@@ -223,111 +223,111 @@
   },
   "_T3PSsW1_PE": {
    "views": 904,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "b6Mxcv1pyBU": {
-   "views": 107324,
-   "asof": "2026-11-08"
+   "views": 107348,
+   "asof": "2026-11-09"
   },
   "bOC3DisEOfg": {
-   "views": 1253439,
-   "asof": "2026-11-08"
+   "views": 1253714,
+   "asof": "2026-11-09"
   },
   "dB6pOolO7io": {
-   "views": 159664,
-   "asof": "2026-11-08"
+   "views": 160116,
+   "asof": "2026-11-09"
   },
   "dtNlpZI86Dk": {
    "views": 20490,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "eiQgljOrkWU": {
-   "views": 208820,
-   "asof": "2026-11-08"
+   "views": 208923,
+   "asof": "2026-11-09"
   },
   "enPbh_A5F7E": {
-   "views": 20847,
-   "asof": "2026-11-08"
+   "views": 20854,
+   "asof": "2026-11-09"
   },
   "f1J38FlDKxo": {
-   "views": 8403748,
-   "asof": "2026-11-08"
+   "views": 8404242,
+   "asof": "2026-11-09"
   },
   "fPdTH7nxjm0": {
    "views": 2362,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "fzOb5be2Pyk": {
    "views": 498,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "hDmY5rfaJFk": {
    "views": 4464,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "jzmNh8lbSp8": {
-   "views": 154802,
-   "asof": "2026-11-08"
+   "views": 154889,
+   "asof": "2026-11-09"
   },
   "kJS78p_oLtE": {
    "views": 479,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "kvBK09W-m7A": {
    "views": 3902,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "m8uUUUsMD3Y": {
-   "views": 315824,
-   "asof": "2026-11-08"
+   "views": 316095,
+   "asof": "2026-11-09"
   },
   "mAzyLvC9Yts": {
    "views": 1266,
-   "asof": "2026-11-08"
+   "asof": "2026-11-09"
   },
   "n-dqdVMwoas": {
-   "views": 72522,
-   "asof": "2026-11-08"
+   "views": 72549,
+   "asof": "2026-11-09"
   },
   "n5CoJk65a7Y": {
-   "views": 668,
-   "asof": "2026-11-08"
+   "views": 669,
+   "asof": "2026-11-09"
   },
   "p7TjXroM4ak": {
-   "views": 24769,
-   "asof": "2026-11-08"
+   "views": 24770,
+   "asof": "2026-11-09"
   },
   "pKwRNdDtai0": {
-   "views": 78113,
-   "asof": "2026-11-07"
+   "views": 78401,
+   "asof": "2026-11-09"
   },
   "qLY04q3L4hA": {
-   "views": 45174,
-   "asof": "2026-11-08"
+   "views": 45200,
+   "asof": "2026-11-09"
   },
   "rRm3Vnb7UPY": {
-   "views": 52503,
-   "asof": "2026-11-08"
+   "views": 52514,
+   "asof": "2026-11-09"
   },
   "sKltfHvsDQM": {
-   "views": 70789,
-   "asof": "2026-11-08"
+   "views": 70822,
+   "asof": "2026-11-09"
   },
   "syML5KT-HzI": {
-   "views": 42940,
-   "asof": "2026-11-08"
+   "views": 42982,
+   "asof": "2026-11-09"
   },
   "t8Ej9aeW388": {
-   "views": 9963,
-   "asof": "2026-11-08"
+   "views": 9976,
+   "asof": "2026-11-09"
   },
   "uarNiSl_uh4": {
-   "views": 28472898,
-   "asof": "2026-11-08"
+   "views": 28474117,
+   "asof": "2026-11-09"
   },
   "yfnh8SuMbNw": {
-   "views": 33895,
-   "asof": "2026-11-08"
+   "views": 33983,
+   "asof": "2026-11-09"
   }
  }
 }
