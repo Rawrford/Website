@@ -57,6 +57,20 @@ jobs:
                               'note': 'estimated from views.json history; +/- ~90k'},
           }
 
+          # NON-YOUTUBE VIEWS (added 17 Nov 2026)
+          # Instagram and TikTok can't be read automatically, so these are fixed
+          # figures supplied by Rease. Each one only counts while its link is still
+          # on the page — remove the card and its views leave the total with it.
+          # To update a figure, change the number and the date.
+          MANUAL = {
+              'instagram.com/reel/DOZFDFwEuFL': {
+                  'title': 'Dua Lipa x Apple — iPhone 17 Pro Max',
+                  'views': 22000000, 'asof': '2026-11-17'},
+              'tiktok.com/@gbrotherson/video/7525854660192685343': {
+                  'title': 'iPhone 16 — Clean Up Using Apple Intelligence',
+                  'views': 218000, 'asof': '2026-11-17'},
+          }
+
           html = open('index.html', encoding='utf-8').read()
           # Three ways a video id can appear on the page. The thumbnail pattern used
           # to be the main one; since every thumbnail is now embedded base64, ids
@@ -140,7 +154,9 @@ jobs:
           carried_ids = [v for v in ids if v not in counts and v in last_known]
           carried = sum(last_known[v]['views'] for v in carried_ids)
           lost = [v for v in ids if v not in counts and v not in last_known]
-          total = live + carried
+          manual_on = {u: r for u, r in MANUAL.items() if u in html}
+          manual = sum(r['views'] for r in manual_on.values())
+          total = live + carried + manual
 
           print(f'counted {len(counts)} of {len(ids)} videos live, total {live:,}')
           if carried_ids:
@@ -150,6 +166,11 @@ jobs:
                   print(f'   {v}  {r["views"]:>12,}  last seen {r["asof"]}')
           if lost:
               print('NO COUNT AND NO HISTORY (contributing zero):', lost)
+          for u, r in manual_on.items():
+              print(f'manual  {r["views"]:>12,}  {r["title"]} (as of {r["asof"]})')
+          for u in MANUAL:
+              if u not in manual_on:
+                  print(f'manual figure skipped, link no longer on page: {u}')
           print(f'TOTAL {total:,}')
 
           # Never overwrite good data with a broken run.
@@ -160,6 +181,7 @@ jobs:
           json.dump({'total': total,
                      'live': live,
                      'carried': carried,
+                     'manual': manual,
                      'tracked': len(counts),
                      'carried_forward': len(carried_ids),
                      'ids_seen': len(ids),
